@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Col, Collapse, Layout, Row, Space } from "antd";
 import Search from "antd/es/input/Search";
+import { LineChart } from "@mui/x-charts/LineChart";
 
 const { Sider, Content } = Layout;
 const { Meta } = Card;
@@ -56,7 +57,11 @@ export const HomePage = () => {
           backgroundColor: backgroundColor,
         }}
       >
-        <Col>{userInfoMethod()}</Col>
+        <Col>
+          {userInfoMethod()}
+          {incomeChartMethod()}
+          {expenseChartMethod()}
+        </Col>
       </Sider>
     </Layout>
   );
@@ -71,6 +76,52 @@ function userInfoMethod() {
   return (
     <Card style={style} hoverable>
       <Meta title="Europe Street beat" description="www.instagram.com" />
+    </Card>
+  );
+}
+
+function incomeChartMethod() {
+  const style = {
+    backgroundColor: "white",
+    height: "200px",
+    marginTop: "50px",
+  };
+  return (
+    <Card style={style} hoverable>
+      <h1>Income</h1>
+      <LineChart
+        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+        series={[
+          {
+            data: [2, 5.5, 2, 8.5, 1.5, 5],
+          },
+        ]}
+        width={300}
+        height={200}
+      />
+    </Card>
+  );
+}
+
+function expenseChartMethod() {
+  const style = {
+    backgroundColor: "white",
+    height: "200px",
+    marginTop: "50px",
+  };
+  return (
+    <Card style={style} hoverable>
+      <h1>Expense</h1>
+      <LineChart
+        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+        series={[
+          {
+            data: [2, 5.5, 2, 8.5, 1.5, 5],
+          },
+        ]}
+        width={300}
+        height={200}
+      />
     </Card>
   );
 }

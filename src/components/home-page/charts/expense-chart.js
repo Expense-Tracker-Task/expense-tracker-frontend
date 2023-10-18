@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col, Dropdown, Row, Space } from "antd";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { DownOutlined } from "@ant-design/icons";
-import { cardStyle } from "../../assets/styles/card-style";
+import { cardStyle } from "../../../assets/styles";
 
 export function ExpenseChart() {
   const items = [

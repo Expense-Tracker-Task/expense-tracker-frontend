@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Col, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { cardStyle } from "../assets/styles/card-style";
+import { cardStyle } from "../../assets/styles";
 
 export function UserInfo() {
   return (

@@ -2,12 +2,11 @@ import React from "react";
 import { Card, Col, Row } from "antd";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Content } from "antd/es/layout/layout";
-import { contentStyle } from "../../assets/styles/content-style";
+import { contentStyle } from "../../../assets/styles";
 
-export function TransactionList(
-  selectedTransactionName,
-  setSelectedTransactionName
-) {
+export const TransactionList = () => {
+  const [selectedTransactionName, setSelectedTransactionName] =
+    React.useState("");
   let transactionList = [
     {
       name: "panel1",
@@ -72,7 +71,7 @@ export function TransactionList(
       </Col>
     </Content>
   );
-}
+};
 
 function transactionComponent(
   transaction,

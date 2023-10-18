@@ -6,6 +6,7 @@ import {
   TransactionOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+import { setCookie } from "../../helpers/cookie_helper";
 
 export function Navigation() {
   const style = {
@@ -33,7 +34,15 @@ export function Navigation() {
       </Row>
       <Row align="middle" justify="start">
         <LogoutOutlined />
-        <h4 style={titleStyle}>Log out</h4>
+        <h4
+          style={titleStyle}
+          onClick={() => {
+            setCookie("access_token", null);
+            window.location.reload();
+          }}
+        >
+          Log out
+        </h4>
       </Row>
     </Col>
   );

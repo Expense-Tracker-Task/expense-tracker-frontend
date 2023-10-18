@@ -1,7 +1,7 @@
 import React from "react";
 import Search from "antd/es/input/Search";
 import { Content } from "antd/es/layout/layout";
-import { contentStyle } from "../assets/styles/content-style";
+import { contentStyle } from "../../assets/styles";
 
 export function SearchBar() {
   return (

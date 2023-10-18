@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Col, Row } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { contentStyle } from "../assets/styles/content-style";
+import { contentStyle } from "../../assets/styles";
 import { Content } from "antd/es/layout/layout";
 
 export function CategoryList() {

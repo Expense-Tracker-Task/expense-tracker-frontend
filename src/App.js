@@ -1,8 +1,11 @@
 import { Space } from "antd";
 import "./App.css";
 import { HomePage } from "./views/home-page";
+import { Authentication } from "./views/auth-page";
+import { getCookie } from "./helpers/cookie_helper";
 
 function App() {
+  let isTokenNull = getCookie("access_token") === null;
   return (
     <Space
       direction="vertical"
@@ -12,7 +15,7 @@ function App() {
       }}
       size={[0, 48]}
     >
-      <HomePage />
+      {isTokenNull ? <Authentication /> : <HomePage />}
     </Space>
   );
 }

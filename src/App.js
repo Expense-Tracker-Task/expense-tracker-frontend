@@ -5,7 +5,9 @@ import { Authentication } from "./views/auth-page";
 import { getCookie } from "./helpers/cookie_helper";
 
 function App() {
-  let isTokenNull = getCookie("access_token") === null;
+  let isTokenNull =
+    getCookie("access_token") === null ||
+    getCookie("access_token") === undefined;
   return (
     <Space
       direction="vertical"

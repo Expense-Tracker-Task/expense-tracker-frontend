@@ -5,7 +5,7 @@ import { setCookie } from "../../helpers/cookie_helper";
 export const loginService = async (body) => {
   try {
     const response = await post(API_URL + "/auth/login", body);
-    if (response.status !== "success") return response;
+    if (!response.status) return response;
     setCookie("username", response.data.username);
     setCookie("email", response.data.email);
     setCookie("firstName", response.data.firstName);

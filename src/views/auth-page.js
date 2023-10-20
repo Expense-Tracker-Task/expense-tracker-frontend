@@ -18,7 +18,9 @@ export const Authentication = () => {
   const handleLogin = async () => {
     if (isLogin) {
       let response = await loginService({ username, password });
-      if (response.status !== "success") {
+      if (response.status) {
+        window.location.reload();
+      } else {
         alert(response.message);
       }
     } else {
@@ -29,11 +31,12 @@ export const Authentication = () => {
         firstName: "-",
         lastName: "-",
       });
-      if (response.status !== "success") {
+      if (response.status) {
+        window.location.reload();
+      } else {
         alert(response.message);
       }
     }
-    window.location.reload();
   };
 
   return (

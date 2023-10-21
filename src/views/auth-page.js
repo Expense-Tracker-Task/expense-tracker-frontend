@@ -6,8 +6,7 @@ import { Button } from "../components/auth-page/button";
 import { Input } from "../components/auth-page/input";
 import { Title } from "../components/auth-page/title";
 import { containerStyle, loginContainerStyle } from "../assets/styles";
-import { loginService } from "../services/auth/login-service";
-import { registerService } from "../services/auth/register-service";
+import { loginService, registerService } from "../services/auth-services";
 
 export const Authentication = () => {
   const [isLogin, setIsLogin] = useState(true);

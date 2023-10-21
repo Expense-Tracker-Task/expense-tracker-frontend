@@ -15,74 +15,75 @@ export function CategoryList() {
     "#9678B6",
   ];
 
+  const categoryList = [
+    {
+      name: "Housing Loan",
+      amount: 145000,
+      color: softColors[0],
+    },
+    {
+      name: "Housing Loan",
+      amount: 145000,
+      color: softColors[1],
+    },
+    {
+      name: "Housing Loan",
+      amount: 145000,
+      color: softColors[2],
+    },
+    {
+      name: "Others",
+      amount: 145000,
+      color: softColors[3],
+    },
+    {
+      name: "Add Category",
+      amount: 145000,
+      color: softColors[4],
+    },
+  ];
+
   return (
     <Content style={{ ...contentStyle, textAlignLast: "justify" }}>
       <h2>Categories</h2>
-      <Row gutter={16}>
-        <Row style={{ width: "75%" }}>
+      <Row align="middle" justify="space-between">
+        {categoryList.map((category) => (
           <Card
             style={{
-              background: softColors[0],
-              marginRight: "5%",
+              background: category.color,
               boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
             }}
             hoverable
           >
-            <Col style={{ color: "white" }}>
-              <h2 style={{ margin: "unset", fontWeight: 500 }}>Housing Loan</h2>
-              <h4 style={{ margin: "unset" }}>$145,000</h4>
-            </Col>
-          </Card>
-          <Card
-            style={{
-              background: softColors[1],
-              marginRight: "5%",
-              boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
-            }}
-            hoverable
-          >
-            <Col style={{ color: "white" }}>
-              <h2 style={{ margin: "unset", fontWeight: 500 }}>Housing Loan</h2>
-              <h4 style={{ margin: "unset" }}>$145,000</h4>
-            </Col>
-          </Card>
-          <Card
-            style={{
-              background: softColors[2],
-              marginRight: "5%",
-              boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
-            }}
-            hoverable
-          >
-            <Col style={{ color: "white" }}>
-              <h2 style={{ margin: "unset", fontWeight: 500 }}>Housing Loan</h2>
-              <h4 style={{ margin: "unset" }}>$145,000</h4>
-            </Col>
-          </Card>
-        </Row>
-        <Card
-          style={{
-            background: softColors[3],
-            boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
-          }}
-          hoverable
-        >
-          <Row align="middle" justify="center">
-            <PlusOutlined
-              style={{ fontSize: "18px", fontWeight: "bold", color: "white" }}
-            />
             <h1
               style={{
-                marginLeft: "30px",
+                margin:
+                  category.name == "Others" || category.name == "Add Category"
+                    ? "15px"
+                    : "unset",
                 fontSize: "18px",
                 fontWeight: "500",
                 color: "white",
               }}
             >
-              Add Category
+              {category.name}
             </h1>
-          </Row>
-        </Card>
+            <h1
+              style={{
+                display:
+                  category.name == "Others" || category.name == "Add Category"
+                    ? "none"
+                    : "block",
+                margin: "unset",
+                fontSize: "18px",
+                fontWeight: "500",
+                color: "white",
+              }}
+            >
+              {category.amount}
+            </h1>
+          </Card>
+        ))}
       </Row>
     </Content>
   );

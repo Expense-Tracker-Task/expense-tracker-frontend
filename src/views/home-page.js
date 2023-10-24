@@ -33,7 +33,7 @@ export const HomePage = () => {
         <CategoryList />
         <TransactionList />
       </Layout>
-      
+
       <Sider
         style={{
           ...siderStyle,

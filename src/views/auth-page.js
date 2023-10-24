@@ -14,7 +14,20 @@ export const Authentication = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  return (
+    <Space style={containerStyle}>
+      <Content style={loginContainerStyle}>
+        {Title(isLogin)}
+        {Input(username, setUsername, "User Name", isLogin)}
+        {Input(email, setEmail, "Email", isLogin)}
+        {Input(password, setPassword, "Password", isLogin, "password")}
+        {Button(isLogin, handleLogin)}
+        {SwitchText(setIsLogin, isLogin)}
+      </Content>
+    </Space>
+  );
+
+  async function handleLogin() {
     if (isLogin) {
       let response = await loginService({ username, password });
       if (response.status) {
@@ -36,18 +49,5 @@ export const Authentication = () => {
         alert(response.message);
       }
     }
-  };
-
-  return (
-    <Space style={containerStyle}>
-      <Content style={loginContainerStyle}>
-        {Title(isLogin)}
-        {Input(username, setUsername, "User Name", isLogin)}
-        {Input(email, setEmail, "Email", isLogin)}
-        {Input(password, setPassword, "Password", isLogin, "password")}
-        {Button(isLogin, handleLogin)}
-        {SwitchText(setIsLogin, isLogin)}
-      </Content>
-    </Space>
-  );
+  }
 };

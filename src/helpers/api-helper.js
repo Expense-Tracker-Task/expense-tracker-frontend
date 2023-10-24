@@ -11,18 +11,18 @@ axiosApi.interceptors.response.use(
   (error) => Promise.reject(error)
 );
 
-function setAccessToken() {
-  const token = getCookie("access_token");
+function setAuthHeader() {
+  const token = getCookie("access_token") || null; // get token from cookie, if token is null or empty string, assign it to null
   if (token != null) {
-    axiosApi.defaults.headers.common["x-access-token"] = token;
+    axiosApi.defaults.headers.common["Authorization"] = "Bearer " + token;
+    axiosApi.defaults.headers.common["Content-Type"] = "application/json";
   }
 }
 
-export async function get(url, config = {}) {
+export async function get(url) {
   try {
-    setAccessToken();
-    axiosApi.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-    let response = await axiosApi.get(url, { ...config });
+    setAuthHeader();
+    let response = await axiosApi.get(url);
     return response.data;
   } catch (error) {
     return {
@@ -35,8 +35,7 @@ export async function get(url, config = {}) {
 
 export async function post(url, body = {}, config = {}) {
   try {
-    setAccessToken();
-    axiosApi.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+    setAuthHeader();
     const response = await axiosApi.post(url, { ...body }, { ...config });
     return response.data;
   } catch (e) {
@@ -50,8 +49,7 @@ export async function post(url, body = {}, config = {}) {
 
 export async function put(url, data, config = {}) {
   try {
-    setAccessToken();
-    axiosApi.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+    setAuthHeader();
     const response = await axiosApi.put(url, { ...data }, { ...config });
     return response.data;
   } catch (error) {
@@ -65,8 +63,7 @@ export async function put(url, data, config = {}) {
 
 export async function del(url, config = {}) {
   try {
-    setAccessToken();
-    axiosApi.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+    setAuthHeader();
     let response = await axiosApi.delete(url, { ...config });
     return response.data;
   } catch (error) {

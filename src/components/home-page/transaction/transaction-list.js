@@ -6,6 +6,7 @@ import { contentStyle } from "../../../assets/styles";
 import { getTransactions } from "../../../services/transaction-services";
 import { softColors } from "../../../constants/colors";
 import { formatDate } from "../../../helpers/formats/date-format";
+import { formatMoney } from "../../../helpers/formats/currency-format";
 
 export const TransactionList = () => {
   const [selectedTransactionName, setSelectedTransactionName] = useState("");
@@ -41,6 +42,7 @@ export const TransactionList = () => {
   }
 
   function transactionComponent(transaction, index) {
+    const formattedTransactionAmount = formatMoney(transaction.amount);
     return (
       <Card
         style={{ marginTop: "20px", boxShadow: "0 2px 3px rgba(0, 0, 0, 0.2)" }}
@@ -62,7 +64,7 @@ export const TransactionList = () => {
               justify="center"
               onClick={() => setSelectedTransactionName(transaction.name)}
             >
-              <h2 style={{ margin: "unset" }}>{transaction.amount}</h2>
+              <h2 style={{ margin: "unset" }}>{formattedTransactionAmount}</h2>
               <ExpandMoreIcon style={{ fontSize: "30px" }} />
             </Row>
           </Row>

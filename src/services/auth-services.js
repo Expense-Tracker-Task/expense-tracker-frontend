@@ -10,6 +10,7 @@ export const loginService = async (body) => {
     setCookie("email", response.data.email);
     setCookie("firstName", response.data.firstName);
     setCookie("lastName", response.data.lastName);
+    setCookie("current_balance", response.data.balance);
     setCookie("access_token", response.data.accessToken);
     return response;
   } catch (error) {
@@ -25,6 +26,7 @@ export const registerService = async (body) => {
     setCookie("email", response.data.email);
     setCookie("firstName", response.data.firstName);
     setCookie("lastName", response.data.lastName);
+    setCookie("current_balance", response.data.balance);
     setCookie("access_token", response.data.accessToken);
     return response;
   } catch (error) {

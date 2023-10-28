@@ -3,6 +3,7 @@ import { Button, Card, Col, Dropdown, Row, Space } from "antd";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { DownOutlined } from "@ant-design/icons";
 import { cardStyle } from "../../../assets/styles";
+import { formatMoney } from "../../../helpers/formats/currency-format";
 
 export function ExpenseChart() {
   const items = [
@@ -18,12 +19,16 @@ export function ExpenseChart() {
   const menuProps = {
     items,
   };
+
+  const totalAmount = 0;
+  const formattedTotalAmount = formatMoney(totalAmount);
+
   return (
     <Card style={{ ...cardStyle, marginTop: "50px" }} hoverable>
       <Row align="middle" justify="space-between">
         <Col style={{ marginLeft: "10%" }}>
           <h1 style={{ margin: "unset" }}>Expense</h1>
-          <h4 style={{ margin: "unset" }}>$145,000</h4>
+          <h4 style={{ margin: "unset" }}>{formattedTotalAmount}</h4>
         </Col>
         <Dropdown menu={menuProps}>
           <Button>

@@ -4,12 +4,13 @@ import { contentStyle } from "../../assets/styles";
 import { Content } from "antd/es/layout/layout";
 import { getCategories } from "../../services/category-services";
 import { softColors } from "../../constants/colors";
+import { formatMoney } from "../../helpers/formats/currency-format";
 
 export function CategoryList() {
   const [categoryList, setCategoryList] = useState([]);
   const staticAddCategoryCardContent = {
     name: "Add Category",
-    amount: 145000,
+    amount: 0,
     color: softColors[4],
   };
   useEffect(() => {
@@ -22,7 +23,7 @@ export function CategoryList() {
     if (response.status) {
       response.data = response.data.slice(0, 4); // Only show 4 categories
       response.data.map((category, index) => {
-        category.amount = 145000;
+        category.amount = formatMoney(category.amount);
         category.color = softColors[index];
       });
       response.data.push(staticAddCategoryCardContent);

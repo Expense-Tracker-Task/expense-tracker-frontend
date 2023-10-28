@@ -17,21 +17,6 @@ export function CategoryList() {
     getCategoriesMethod();
   }, []);
 
-  async function getCategoriesMethod() {
-    let response = await getCategories();
-
-    if (response.status) {
-      response.data = response.data.slice(0, 4); // Only show 4 categories
-      response.data.map((category, index) => {
-        category.amount = formatMoney(category.amount);
-        category.color = softColors[index];
-      });
-      response.data.push(staticAddCategoryCardContent);
-      setCategoryList(response.data);
-    } else {
-      // alert(response.message);
-    }
-  }
   return (
     <Content style={{ ...contentStyle, textAlignLast: "justify" }}>
       <h2>Categories</h2>
@@ -77,4 +62,31 @@ export function CategoryList() {
       </Row>
     </Content>
   );
+
+  async function getCategoriesMethod() {
+    let response = await getCategories();
+
+    if (response.status) {
+      response.data = getFourCategoriesHasMostValue(response.data);
+      response.data = manipulateCategoryParameters(response.data);
+      response.data.push(staticAddCategoryCardContent);
+      setCategoryList(response.data);
+    } else {
+      // alert(response.message);
+    }
+  }
+
+  function getFourCategoriesHasMostValue(categories) {
+    categories.sort((a, b) => b.amount - a.amount);
+    categories = categories.slice(0, 4); // Only show 4 categories
+    return categories;
+  }
+
+  function manipulateCategoryParameters(categories) {
+    return categories.map((category, index) => {
+      category.amount = formatMoney(category.amount);
+      category.color = softColors[index];
+      return category;
+    });
+  }
 }

@@ -6,16 +6,17 @@ import { SearchBar } from "../components/home-page/search-bar";
 import { CategoryList } from "../components/home-page/category-list";
 import { TransactionList } from "../components/home-page/transaction/transaction-list";
 import { UserInfo } from "../components/home-page/user-info";
-import { IncomeChart } from "../components/home-page/charts/income-chart";
-import { ExpenseChart } from "../components/home-page/charts/expense-chart";
 import { AddTransactionButton } from "../components/home-page/transaction/add-transaction-button";
 import { siderStyle } from "../assets/styles";
 import { backgroundColor } from "../constants/colors";
 import { getTransactions } from "../services/transaction-services";
+import { CustomLineChart } from "../components/home-page/custom-line-chart";
 const { Sider } = Layout;
 
 export const HomePage = () => {
-  const [transactionList, setTransactionList] = useState(null);
+  const [transactionList, setTransactionList] = useState([]);
+  const [expenseTransactionList, setExpenseTransactionList] = useState([]);
+  const [incomeTransactionList, setIncomeTransactionList] = useState([]);
 
   useEffect(() => {
     getTransactionsMethod();
@@ -51,8 +52,14 @@ export const HomePage = () => {
       >
         <Col>
           <UserInfo />
-          <IncomeChart transactionList={transactionList} />
-          <ExpenseChart transactionList={transactionList} />
+          <CustomLineChart
+            name={"Expense"}
+            transactionList={expenseTransactionList}
+          />
+          <CustomLineChart
+            name={"Income"}
+            transactionList={incomeTransactionList}
+          />
           <AddTransactionButton />
         </Col>
       </Sider>
@@ -64,6 +71,8 @@ export const HomePage = () => {
 
     if (response.status) {
       setTransactionList(response.data);
+      setExpenseTransactionList(response.data.filter((e) => e.expense == true));
+      setIncomeTransactionList(response.data.filter((e) => e.expense == false));
     } else {
       // alert(response.message);
     }

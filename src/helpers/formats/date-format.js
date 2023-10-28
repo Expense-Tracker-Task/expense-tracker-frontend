@@ -8,3 +8,11 @@ export const formatDate = (date) => {
   var today = new Date(date);
   return today.toLocaleDateString("tr-TR", options);
 };
+
+export const returnDayNumber = (date) => {
+  var options = {
+    day: "numeric",
+  };
+  var today = new Date(date);
+  return parseInt(today.toLocaleDateString("tr-TR", options));
+};

@@ -16,7 +16,7 @@ export const Authentication = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      if(username !=  "" && password != ""){
+      if(username !==  "" && password !== ""){
         handleLogin();
       }else{
         alert("Missing Info")

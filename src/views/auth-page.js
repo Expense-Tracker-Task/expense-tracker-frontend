@@ -1,6 +1,6 @@
 import { Space } from "antd";
 import { Content } from "antd/es/layout/layout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SwitchText } from "../components/auth-page/switch-text";
 import { Button } from "../components/auth-page/button";
 import { Input } from "../components/auth-page/input";
@@ -13,6 +13,23 @@ export const Authentication = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      if(username !=  "" && password != ""){
+        handleLogin();
+      }else{
+        alert("Missing Info")
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [username, password]);
 
   return (
     <Space style={containerStyle}>
@@ -28,6 +45,7 @@ export const Authentication = () => {
   );
 
   async function handleLogin() {
+    console.log({ username, password });
     if (isLogin) {
       let response = await loginService({ username, password });
       if (response.status) {

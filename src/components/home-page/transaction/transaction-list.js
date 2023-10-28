@@ -26,6 +26,8 @@ export const TransactionList = ({ transactionList }) => {
 
   function transactionComponent(transaction, index) {
     const formattedTransactionAmount = formatMoney(transaction.amount);
+    const indicator = transaction.expense ? "-" : "+";
+    const amountColor = transaction.expense ? "red" : "green";
     return (
       <Card
         style={{ marginTop: "20px", boxShadow: "0 2px 3px rgba(0, 0, 0, 0.2)" }}
@@ -47,7 +49,9 @@ export const TransactionList = ({ transactionList }) => {
               justify="center"
               onClick={() => setSelectedTransactionName(transaction.name)}
             >
-              <h2 style={{ margin: "unset" }}>{formattedTransactionAmount}</h2>
+              <h2 style={{ margin: "unset", color: amountColor }}>
+                {indicator + formattedTransactionAmount}
+              </h2>
               <ExpandMoreIcon style={{ fontSize: "30px" }} />
             </Row>
           </Row>

@@ -76,7 +76,9 @@ export const TransactionList = () => {
                 }}
               ></div>
               <h3 style={{ margin: "unset" }}>Description</h3>
-              <p>{transaction.description ?? ""}</p>
+              <p style={{ textAlignLast: "start" }}>
+                {transaction.description ?? ""}
+              </p>
             </Col>
           )}
         </Col>

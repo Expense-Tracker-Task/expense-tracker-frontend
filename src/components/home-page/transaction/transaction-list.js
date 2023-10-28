@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Col, Row } from "antd";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Content } from "antd/es/layout/layout";
 import { contentStyle } from "../../../assets/styles";
-import { getTransactions } from "../../../services/transaction-services";
-import { softColors } from "../../../constants/colors";
 import { formatDate } from "../../../helpers/formats/date-format";
 import { formatMoney } from "../../../helpers/formats/currency-format";
 
-export const TransactionList = () => {
+export const TransactionList = ({ transactionList }) => {
   const [selectedTransactionName, setSelectedTransactionName] = useState("");
-  const [transactionList, setTransactionList] = useState(null);
-
-  useEffect(() => {
-    getTransactionsMethod();
-  }, []);
 
   return (
     <Content style={{ ...contentStyle, textAlignLast: "justify" }}>
@@ -30,16 +23,6 @@ export const TransactionList = () => {
       )}
     </Content>
   );
-
-  async function getTransactionsMethod() {
-    let response = await getTransactions();
-
-    if (response.status) {
-      setTransactionList(response.data);
-    } else {
-      // alert(response.message);
-    }
-  }
 
   function transactionComponent(transaction, index) {
     const formattedTransactionAmount = formatMoney(transaction.amount);

@@ -17,11 +17,11 @@ export const HomePage = () => {
   const [transactionList, setTransactionList] = useState([]);
   const [expenseTransactionList, setExpenseTransactionList] = useState([]);
   const [incomeTransactionList, setIncomeTransactionList] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     getTransactionsMethod();
   }, []);
-
   return (
     <Layout style={{ background: backgroundColor }}>
       <Sider style={{ ...siderStyle, marginLeft: "3%" }}>
@@ -37,9 +37,12 @@ export const HomePage = () => {
       </Sider>
 
       <Layout style={{ alignSelf: "flex-start" }}>
-        <SearchBar />
-        <CategoryList />
-        <TransactionList transactionList={transactionList} />
+        <SearchBar setSearchText={setSearchText} />
+        <CategoryList searchText={searchText} />
+        <TransactionList
+          searchText={searchText}
+          transactionList={transactionList}
+        />
       </Layout>
 
       <Sider

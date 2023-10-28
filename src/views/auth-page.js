@@ -45,7 +45,6 @@ export const Authentication = () => {
   );
 
   async function handleLogin() {
-    console.log({ username, password });
     if (isLogin) {
       let response = await loginService({ username, password });
       if (response.status) {

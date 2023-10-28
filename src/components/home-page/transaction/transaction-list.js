@@ -6,7 +6,7 @@ import { contentStyle } from "../../../assets/styles";
 import { formatDate } from "../../../helpers/formats/date-format";
 import { formatMoney } from "../../../helpers/formats/currency-format";
 
-export const TransactionList = ({ transactionList }) => {
+export const TransactionList = ({ searchText, transactionList }) => {
   const [selectedTransactionName, setSelectedTransactionName] = useState("");
 
   return (
@@ -14,9 +14,11 @@ export const TransactionList = ({ transactionList }) => {
       <h2>Transactions</h2>
       {transactionList != null ? (
         <Col>
-          {transactionList.map((transaction, index) =>
-            transactionComponent(transaction, index)
-          )}
+          {transactionList.map((transaction, index) => {
+            if (transaction.name.includes(searchText)) {
+              return transactionComponent(transaction, index);
+            }
+          })}
         </Col>
       ) : (
         <p>There are no transactions</p>

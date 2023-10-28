@@ -92,7 +92,6 @@ export const CustomLineChart = ({ name, transactionList }) => {
       setXAxis((xAxis) => [...xAxis, dayNumber]);
       setSeries((series) => [...series, amount]);
     }
-    console.log({ xAxis, series });
   }
 
   function getThisMonthTransactions(transactionList) {

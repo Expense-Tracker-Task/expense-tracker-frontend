@@ -6,7 +6,7 @@ import { getCategories } from "../../services/category-services";
 import { softColors } from "../../constants/colors";
 import { formatMoney } from "../../helpers/formats/currency-format";
 
-export function CategoryList() {
+export function CategoryList({ searchText }) {
   const [categoryList, setCategoryList] = useState([]);
   const staticAddCategoryCardContent = {
     name: "Add Category",
@@ -17,6 +17,7 @@ export function CategoryList() {
     getCategoriesMethod();
   }, []);
 
+  if (searchText != "") return;
   return (
     <Content style={{ ...contentStyle, textAlignLast: "justify" }}>
       <h2>Categories</h2>

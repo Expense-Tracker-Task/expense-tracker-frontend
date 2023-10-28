@@ -6,7 +6,11 @@ import { getCategories } from "../../services/category-services";
 import { softColors } from "../../constants/colors";
 import { formatMoney } from "../../helpers/formats/currency-format";
 
-export function CategoryList({ searchText }) {
+export function CategoryList({
+  searchText,
+  selectedCategory,
+  setSelectedCategory,
+}) {
   const [categoryList, setCategoryList] = useState([]);
   const staticAddCategoryCardContent = {
     name: "Add Category",
@@ -28,7 +32,10 @@ export function CategoryList({ searchText }) {
             style={{
               background: category.color,
               boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
+              border:
+                category.name == selectedCategory ? "2px solid black" : "",
             }}
+            onClick={() => setSelectedCategory(category.name)}
             hoverable
           >
             <h1

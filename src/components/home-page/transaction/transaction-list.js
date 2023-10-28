@@ -5,24 +5,49 @@ import { Content } from "antd/es/layout/layout";
 import { contentStyle } from "../../../assets/styles";
 import { formatDate } from "../../../helpers/formats/date-format";
 import { formatMoney } from "../../../helpers/formats/currency-format";
-
-export const TransactionList = ({ searchText, transactionList }) => {
+import { CloseCircleOutlined } from "@ant-design/icons";
+export const TransactionList = ({
+  searchText,
+  transactionList,
+  selectedCategory,
+  setSelectedCategory,
+}) => {
   const [selectedTransactionName, setSelectedTransactionName] = useState("");
 
   return (
     <Content style={{ ...contentStyle, textAlignLast: "justify" }}>
-      <h2>Transactions</h2>
-      {transactionList != null ? (
+      <Row align={"middle"} justify={"space-between"}>
+        <h2>Transactions</h2>
+        {selectedCategory != "" ? (
+          <Row align={"middle"}>
+            <CloseCircleOutlined
+              style={{ cursor: "pointer" }}
+              onClick={() => setSelectedCategory("")}
+            />
+            <p style={{ marginLeft: "5px", fontWeight: "500" }}>
+              Filter(selected category): {selectedCategory}
+            </p>
+          </Row>
+        ) : (
+          ""
+        )}
+      </Row>
+      {
         <Col>
           {transactionList.map((transaction, index) => {
-            if (transaction.name.includes(searchText)) {
-              return transactionComponent(transaction, index);
+            if (searchText && !transaction.name.includes(searchText)) return;
+
+            if (
+              selectedCategory &&
+              selectedCategory !== transaction.category.name
+            ) {
+              return;
             }
+
+            return transactionComponent(transaction, index);
           })}
         </Col>
-      ) : (
-        <p>There are no transactions</p>
-      )}
+      }
     </Content>
   );
 

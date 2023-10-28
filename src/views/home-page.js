@@ -18,7 +18,7 @@ export const HomePage = () => {
   const [expenseTransactionList, setExpenseTransactionList] = useState([]);
   const [incomeTransactionList, setIncomeTransactionList] = useState([]);
   const [searchText, setSearchText] = useState("");
-
+  const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
     getTransactionsMethod();
   }, []);
@@ -38,10 +38,16 @@ export const HomePage = () => {
 
       <Layout style={{ alignSelf: "flex-start" }}>
         <SearchBar setSearchText={setSearchText} />
-        <CategoryList searchText={searchText} />
+        <CategoryList
+          searchText={searchText}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
         <TransactionList
           searchText={searchText}
           transactionList={transactionList}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
         />
       </Layout>
 

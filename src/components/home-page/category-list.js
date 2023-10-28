@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row } from "antd";
+import { Button, Card, Modal, Row } from "antd";
 import { contentStyle } from "../../assets/styles";
 import { Content } from "antd/es/layout/layout";
 import { getCategories } from "../../services/category-services";
@@ -12,6 +12,8 @@ export function CategoryList({
   setSelectedCategory,
 }) {
   const [categoryList, setCategoryList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const staticAddCategoryCardContent = {
     name: "Add Category",
     amount: 0,
@@ -20,6 +22,22 @@ export function CategoryList({
   useEffect(() => {
     getCategoriesMethod();
   }, []);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setOpen(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   if (searchText != "") return;
   return (
@@ -35,15 +53,18 @@ export function CategoryList({
               border:
                 category.name == selectedCategory ? "2px solid black" : "",
             }}
-            onClick={() => setSelectedCategory(category.name)}
+            onClick={() => {
+              if (category.name !== "Add Category") {
+                setSelectedCategory(category.name);
+              } else {
+                showModal();
+              }
+            }}
             hoverable
           >
             <h1
               style={{
-                margin:
-                  category.name == "Others" || category.name == "Add Category"
-                    ? "15px"
-                    : "unset",
+                margin: category.name == "Add Category" ? "15px" : "unset",
                 fontSize: "18px",
                 fontWeight: "500",
                 color: "white",
@@ -53,10 +74,7 @@ export function CategoryList({
             </h1>
             <h1
               style={{
-                display:
-                  category.name == "Others" || category.name == "Add Category"
-                    ? "none"
-                    : "block",
+                display: category.name == "Add Category" ? "none" : "block",
                 margin: "unset",
                 fontSize: "18px",
                 fontWeight: "500",
@@ -68,6 +86,31 @@ export function CategoryList({
           </Card>
         ))}
       </Row>
+      <Modal
+        open={open}
+        title="Add Category"
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Return
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            loading={loading}
+            onClick={handleOk}
+          >
+            Submit
+          </Button>,
+        ]}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </Content>
   );
 

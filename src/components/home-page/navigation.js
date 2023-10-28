@@ -24,6 +24,7 @@ export function Navigation() {
         <HomeOutlined />
         <h4 style={titleStyle}>Home</h4>
       </Row>
+      {/* 
       <Row align="middle" justify="start">
         <UnorderedListOutlined />
         <h4 style={titleStyle}>Categories</h4>
@@ -31,7 +32,7 @@ export function Navigation() {
       <Row align="middle" justify="start">
         <TransactionOutlined />
         <h4 style={titleStyle}>Transactions</h4>
-      </Row>
+      </Row> */}
       <Row align="middle" justify="start">
         <LogoutOutlined />
         <h4

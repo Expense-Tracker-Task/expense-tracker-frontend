@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Modal, Row } from "antd";
+import { Button, Card, Input, Modal, Row, message } from "antd";
 import { contentStyle } from "../../assets/styles";
 import { Content } from "antd/es/layout/layout";
-import { getCategories } from "../../services/category-services";
+import { getCategories, saveCategory } from "../../services/category-services";
 import { softColors } from "../../constants/colors";
 import { formatMoney } from "../../helpers/formats/currency-format";
+import { AppstoreAddOutlined } from "@ant-design/icons";
 
 export function CategoryList({
   searchText,
@@ -14,57 +15,50 @@ export function CategoryList({
   const [categoryList, setCategoryList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const staticAddCategoryCardContent = {
-    name: "Add Category",
-    amount: 0,
-    color: softColors[4],
-  };
+  const [categoryName, setCategoryName] = useState("");
+
   useEffect(() => {
     getCategoriesMethod();
-  }, []);
-
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleOk = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [categoryName]);
 
   if (searchText != "") return;
   return (
     <Content style={{ ...contentStyle, textAlignLast: "justify" }}>
-      <h2>Categories</h2>
-      <Row align="middle" justify="space-between">
+      <Row align={"middle"} justify={"space-between"}>
+        <h2>Categories</h2>
+        <AppstoreAddOutlined
+          style={{ fontSize: "30px", cursor: "pointer" }}
+          onClick={() => setOpen(true)}
+        />
+      </Row>
+      <div
+        style={{
+          display: "-webkit-inline-box",
+          overflow: "auto",
+          width: "-webkit-fill-available",
+        }}
+      >
         {categoryList.map((category, index) => (
           <Card
             key={index}
             style={{
               background: category.color,
               boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
+              marginLeft: "8px",
+              marginRight: "8px",
               border:
                 category.name == selectedCategory ? "2px solid black" : "",
             }}
-            onClick={() => {
-              if (category.name !== "Add Category") {
-                setSelectedCategory(category.name);
-              } else {
-                showModal();
-              }
-            }}
+            onClick={() => setSelectedCategory(category.name)}
             hoverable
           >
             <h1
               style={{
-                margin: category.name == "Add Category" ? "15px" : "unset",
+                margin: "unset",
                 fontSize: "18px",
                 fontWeight: "500",
                 color: "white",
@@ -74,7 +68,7 @@ export function CategoryList({
             </h1>
             <h1
               style={{
-                display: category.name == "Add Category" ? "none" : "block",
+                display: "block",
                 margin: "unset",
                 fontSize: "18px",
                 fontWeight: "500",
@@ -85,15 +79,21 @@ export function CategoryList({
             </h1>
           </Card>
         ))}
-      </Row>
+      </div>
+      {modalForAddingCategory()}
+    </Content>
+  );
+
+  function modalForAddingCategory() {
+    return (
       <Modal
         open={open}
         title="Add Category"
         onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={() => setOpen(false)}
         footer={[
-          <Button key="back" onClick={handleCancel}>
-            Return
+          <Button key="back" onClick={() => setOpen(false)}>
+            Back
           </Button>,
           <Button
             key="submit"
@@ -105,39 +105,69 @@ export function CategoryList({
           </Button>,
         ]}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <div style={{ marginTop: "24px", marginBottom: "24px" }}>
+          <Input
+            addonBefore="Category Name"
+            value={categoryName}
+            onChange={(e) => setCategoryName(e.target.value)}
+          />
+        </div>
       </Modal>
-    </Content>
-  );
+    );
+  }
 
   async function getCategoriesMethod() {
     let response = await getCategories();
 
     if (response.status) {
-      response.data = getFourCategoriesHasMostValue(response.data);
+      response.data = getCategoriesHasMostValue(response.data);
       response.data = manipulateCategoryParameters(response.data);
-      response.data.push(staticAddCategoryCardContent);
       setCategoryList(response.data);
     } else {
       // alert(response.message);
     }
   }
 
-  function getFourCategoriesHasMostValue(categories) {
+  async function addCategoryMethod() {
+    let response = await saveCategory(categoryName);
+
+    if (response.status) {
+      message.success("Category has been added successfully");
+    } else {
+      message.error("Category has not been added");
+    }
+  }
+
+  function getCategoriesHasMostValue(categories) {
     categories.sort((a, b) => b.amount - a.amount);
-    categories = categories.slice(0, 4); // Only show 4 categories
     return categories;
   }
 
   function manipulateCategoryParameters(categories) {
     return categories.map((category, index) => {
       category.amount = formatMoney(category.amount);
-      category.color = softColors[index];
+      category.color = softColors[index % 6];
       return category;
     });
+  }
+
+  function handleOk() {
+    setLoading(true);
+    addCategoryMethod().then(() => {
+      getCategoriesMethod();
+      setLoading(false);
+      setOpen(false);
+      setCategoryName("");
+    });
+  }
+
+  function handleKeyPress(event) {
+    if (event.key === "Enter") {
+      if (categoryName !== "") {
+        handleOk();
+      } else {
+        alert("Missing Info");
+      }
+    }
   }
 }

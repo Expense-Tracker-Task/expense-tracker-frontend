@@ -2,11 +2,10 @@ import React from "react";
 import { Col, Row } from "antd";
 import {
   HomeOutlined,
-  UnorderedListOutlined,
-  TransactionOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
 import { setCookie } from "../../helpers/cookie_helper";
+import { logoutService } from "../../services/auth-services";
 
 export function Navigation() {
   const style = {
@@ -37,10 +36,7 @@ export function Navigation() {
         <LogoutOutlined />
         <h4
           style={titleStyle}
-          onClick={() => {
-            setCookie("access_token", null);
-            window.location.reload();
-          }}
+          onClick={logoutService}
         >
           Log out
         </h4>

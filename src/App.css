@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+/*
+#custom-scroll-content {
+  display: "-webkit-inline-box";
+  overflow: "auto";
+  width: "-webkit-fill-available";
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(28, 239, 9, 0.1);
+}
+
+#custom-scroll-content::-webkit-scrollbar-thumb {
+  background: rgba(112, 0, 240, 0.2);
+}
+
+#custom-scroll-content::-webkit-scrollbar-track {
+  background: rgba(223, 8, 8, 0.1);
+}
+*/

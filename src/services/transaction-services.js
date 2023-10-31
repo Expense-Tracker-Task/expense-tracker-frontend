@@ -6,7 +6,37 @@ export const getTransactions = async () => {
   return response;
 };
 
-export const saveTransaction = async (body) => {
+export const saveTransaction = async (
+  name,
+  amount,
+  description,
+  selectedDate,
+  currentUserId,
+  selectedCategoryId,
+  isExpense
+) => {
+  console.log({
+    name,
+    amount,
+    description,
+    selectedDate,
+    currentUserId,
+    selectedCategoryId,
+    isExpense,
+  });
+  const body = {
+    name: name,
+    amount: amount,
+    description: description,
+    date: selectedDate,
+    user: {
+      id: currentUserId,
+    },
+    category: {
+      id: selectedCategoryId,
+    },
+    expense: isExpense,
+  };
   const response = await post(API_URL + "/transaction", body);
   return response;
 };

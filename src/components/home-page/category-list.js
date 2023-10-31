@@ -120,7 +120,7 @@ export function CategoryList({
     let response = await getCategories();
 
     if (response.status) {
-      response.data = getCategoriesHasMostValue(response.data);
+      response.data = sortCategoriesByAmount(response.data);
       response.data = manipulateCategoryParameters(response.data);
       setCategoryList(response.data);
     } else {
@@ -138,7 +138,7 @@ export function CategoryList({
     }
   }
 
-  function getCategoriesHasMostValue(categories) {
+  function sortCategoriesByAmount(categories) {
     categories.sort((a, b) => b.amount - a.amount);
     return categories;
   }

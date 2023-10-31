@@ -69,7 +69,7 @@ export const HomePage = () => {
             name={"Income"}
             transactionList={incomeTransactionList}
           />
-          <AddTransactionButton />
+          <AddTransactionButton getTransactionsMethod={getTransactionsMethod}/>
         </Col>
       </Sider>
     </Layout>

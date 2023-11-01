@@ -1,5 +1,5 @@
 import { API_URL } from "../constants/api";
-import { get, post } from "../helpers/api-helper";
+import { get, post, del } from "../helpers/api-helper";
 
 export const getTransactions = async () => {
   const response = await get(API_URL + "/transaction/all");
@@ -15,15 +15,6 @@ export const saveTransaction = async (
   selectedCategoryId,
   isExpense
 ) => {
-  console.log({
-    name,
-    amount,
-    description,
-    selectedDate,
-    currentUserId,
-    selectedCategoryId,
-    isExpense,
-  });
   const body = {
     name: name,
     amount: amount,
@@ -38,5 +29,10 @@ export const saveTransaction = async (
     expense: isExpense,
   };
   const response = await post(API_URL + "/transaction", body);
+  return response;
+};
+
+export const deleteTransaction = async (id) => {
+  const response = await del(API_URL + "/transaction/" + id);
   return response;
 };

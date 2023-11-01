@@ -5,12 +5,14 @@ import { Content } from "antd/es/layout/layout";
 import { contentStyle } from "../../../assets/styles";
 import { formatDate } from "../../../helpers/formats/date-format";
 import { formatMoney } from "../../../helpers/formats/currency-format";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, DeleteOutlined } from "@ant-design/icons";
+import { deleteTransaction } from "../../../services/transaction-services";
 export const TransactionList = ({
   searchText,
   transactionList,
   selectedCategory,
   setSelectedCategory,
+  getTransactionsMethod,
 }) => {
   const [selectedTransactionName, setSelectedTransactionName] = useState("");
 
@@ -92,13 +94,29 @@ export const TransactionList = ({
                 }}
               ></div>
               <h3 style={{ margin: "unset" }}>Description</h3>
-              <p style={{ textAlignLast: "start" }}>
-                {transaction.description ?? ""}
-              </p>
+              <Row align={"middle"} justify={"space-between"}>
+                <p style={{ textAlignLast: "start" }}>
+                  {transaction.description ?? ""}
+                </p>
+                <DeleteOutlined
+                  style={{ fontSize: "20px", color: "red" }}
+                  onClick={() => deleteTransactionMethod(transaction.id)}
+                />
+              </Row>
             </Col>
           )}
         </Col>
       </Card>
     );
+  }
+
+  async function deleteTransactionMethod(id) {
+    let response = await deleteTransaction(id);
+
+    if (response.status) {
+      getTransactionsMethod();
+    } else {
+      alert("An issue occured once delete transaction");
+    }
   }
 };

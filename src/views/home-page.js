@@ -48,6 +48,7 @@ export const HomePage = () => {
           transactionList={transactionList}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          getTransactionsMethod={getTransactionsMethod}
         />
       </Layout>
 
@@ -69,7 +70,7 @@ export const HomePage = () => {
             name={"Income"}
             transactionList={incomeTransactionList}
           />
-          <AddTransactionButton getTransactionsMethod={getTransactionsMethod}/>
+          <AddTransactionButton getTransactionsMethod={getTransactionsMethod} />
         </Col>
       </Sider>
     </Layout>

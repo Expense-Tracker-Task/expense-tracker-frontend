@@ -66,9 +66,14 @@ export const TransactionList = ({
         <Col>
           <Row align="middle" justify="space-between">
             <Col style={{ marginLeft: "1%" }}>
-              <h2 style={{ margin: "unset", textAlignLast: "start" }}>
-                {transaction.name}
-              </h2>
+              <Row align="middle" justify="start">
+                <h2 style={{ margin: "unset", textAlignLast: "start" }}>
+                  {transaction.name}
+                </h2>
+                <p style={{ marginLeft: "5px" }}>
+                  {"/   " + transaction.category.name}
+                </p>
+              </Row>
               <p style={{ display: "inline-flex" }}>
                 {formatDate(transaction.date)}
               </p>

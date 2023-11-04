@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { cardStyle } from "../../assets/styles";
-import { getCookie } from "../../helpers/cookie_helper";
 import { formatMoney } from "../../helpers/formats/currency-format";
+import { getCurrentUser } from "../../services/user-services";
 
-export function UserInfo() {
-  const userName = getCookie("username");
-  const currentBalance = getCookie("current_balance") ?? 145000;
-  const formattedCurrentBalance = formatMoney(currentBalance);
+export function UserInfo(props) {
+  const { transactionList } = props;
+  const [userName, setUsername] = useState("");
+  const [userBalance, setUserBalance] = useState(0);
+
+  useEffect(() => {
+    getUserInfoMethod();
+  }, [transactionList]);
   return (
     <Card style={cardStyle} hoverable>
       <Col style={{ textAlignLast: "center" }}>
@@ -25,10 +29,16 @@ export function UserInfo() {
             Current Wallet Balance:
           </h4>
           <h4 style={{ margin: "unset", marginTop: "5px", marginLeft: "5px" }}>
-            {formattedCurrentBalance}
+            {userBalance}
           </h4>
         </Row>
       </Col>
     </Card>
   );
+
+  async function getUserInfoMethod() {
+    const currentUser = await getCurrentUser();
+    setUsername(currentUser.data.username);
+    setUserBalance(formatMoney(currentUser.data.balance));
+  }
 }

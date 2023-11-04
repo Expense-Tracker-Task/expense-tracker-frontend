@@ -11,6 +11,7 @@ export function CategoryList({
   searchText,
   selectedCategory,
   setSelectedCategory,
+  transactionList
 }) {
   const [categoryList, setCategoryList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export function CategoryList({
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [categoryName]);
+  }, [categoryName, transactionList]);
 
   if (searchText != "") return;
   return (

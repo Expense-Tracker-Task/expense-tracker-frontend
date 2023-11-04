@@ -42,6 +42,7 @@ export const HomePage = () => {
           searchText={searchText}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          transactionList={transactionList}
         />
         <TransactionList
           searchText={searchText}
@@ -61,7 +62,7 @@ export const HomePage = () => {
         }}
       >
         <Col>
-          <UserInfo />
+          <UserInfo transactionList={transactionList}/>
           <CustomLineChart
             name={"Expense"}
             transactionList={expenseTransactionList}

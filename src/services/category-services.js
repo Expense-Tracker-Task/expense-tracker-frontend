@@ -3,7 +3,7 @@ import { get, post, put } from "../helpers/api-helper";
 import { getCookie } from "../helpers/cookie_helper";
 
 export const getCategories = async () => {
-  const response = await get(API_URL + "/category/all");
+  const response = await get(API_URL + "/categories");
   return response;
 };
 
@@ -16,11 +16,6 @@ export const saveCategory = async (name) => {
       id: userId,
     },
   };
-  const response = await post(API_URL + "/category", body);
-  return response;
-};
-
-export const updateCategory = async (body) => {
-  const response = await put(API_URL + "/category", body);
+  const response = await post(API_URL + "/categories", body);
   return response;
 };
